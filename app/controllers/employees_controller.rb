@@ -12,8 +12,11 @@ class EmployeesController < ApplicationController
       job_title: params[:job_title],
       department_id: params[:department_id]
     )
-    employee.save
-    render json: employee.as_json
+    if employee.save
+      render json: employee.as_json
+    else
+      render json: {errors: employee.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -31,5 +34,11 @@ class EmployeesController < ApplicationController
       employee.department_id = params[:department_id] || employee.department_id
       employee.save
     render json: employee.as_json
+  end
+
+  def destroy
+    employee = Employee.find_by(id: params[:id])
+    employee.destroy
+    render json: {message: "Employee has been removed."}
   end
 end

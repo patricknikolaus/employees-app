@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   post "/employees", controller: "employees", action: "create"
   get "/employees/:id", controller: "employees", action: "show"
   patch "/employees/:id" => "employees#update"
+  delete "employees/:id" => "employees#destroy"
 
 end
